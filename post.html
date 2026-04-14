@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Post</title>
+
+<!-- AdSense (UMA VEZ) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9234613150828597"
+crossorigin="anonymous"></script>
+
+<style>
+body { background:#000; color:#fff; font-family:sans-serif; padding:20px; }
+a { color:#0af; }
+</style>
+
+</head>
+
+<body>
+
+<a href="index.html">⬅ Voltar</a>
+
+<h1 id="title"></h1>
+<p id="author"></p>
+
+<!-- 🔥 ANÚNCIO (APENAS 1) -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9234613150828597"
+     data-ad-slot="1828596374"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<h2>📖 Descrição</h2>
+<p id="desc"></p>
+
+<h2>🧠 Análise</h2>
+<p id="analysis"></p>
+
+<script src="data.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get("id"));
+
+const item = db.find(i => i.id === id);
+
+document.getElementById("title").innerText = item.title;
+document.getElementById("author").innerText = item.author;
+document.getElementById("desc").innerText = item.desc;
+document.getElementById("analysis").innerText = item.analysis;
+</script>
+
+</body>
+</html>
