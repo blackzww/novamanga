@@ -1,72 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Mangá</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>Nova Mangá | Análises de Mangás, Reviews e Recomendações</title>
+
+<meta name="description" content="Análises completas de mangás como One Piece, Naruto e Death Note. Descubra os melhores mangás com reviews detalhadas.">
+<meta name="keywords" content="mangás, análise de mangás, melhores mangás, reviews de mangás">
+<meta name="author" content="Nova Mangá">
+
+<meta name="theme-color" content="#000000">
+
+<!-- Open Graph (Google + redes sociais) -->
+<meta property="og:title" content="Nova Mangá">
+<meta property="og:description" content="Análises completas de mangás">
+<meta property="og:type" content="website">
+
+<!-- 🔥 AdSense (APENAS UMA VEZ NO SITE) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9234613150828597"
+crossorigin="anonymous"></script>
 
 <style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
 body {
-  margin:0;
-  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
-  background:#000;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background:linear-gradient(135deg,#0a0a0a,#1a1a1a);
   color:#fff;
 }
 
+/* HEADER */
 .header {
   position:sticky;
   top:0;
   backdrop-filter:blur(20px);
-  background:rgba(0,0,0,0.7);
-  padding:15px;
+  background:rgba(0,0,0,0.85);
+  padding:20px;
   text-align:center;
-  font-weight:600;
   border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
+.header h1 {
+  font-size:26px;
+  background:linear-gradient(135deg,#fff,#0a84ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
 .nav {
+  margin-top:10px;
   display:flex;
   justify-content:center;
-  gap:15px;
-  font-size:14px;
-  margin-top:5px;
+  gap:20px;
 }
 
 .nav a {
-  color:#0a84ff;
+  color:#8e8e93;
   text-decoration:none;
+  font-size:14px;
 }
 
+.nav a:hover { color:#fff; }
+
+/* SEO TEXT */
+.seo-box {
+  max-width:800px;
+  margin:20px auto;
+  padding:20px;
+  color:#aaa;
+  line-height:1.6;
+}
+
+/* GRID */
 .container {
+  max-width:800px;
+  margin:auto;
   padding:20px;
 }
 
 .card {
   background:#1c1c1e;
   border-radius:20px;
-  padding:15px;
+  padding:20px;
   margin-bottom:15px;
   transition:0.2s;
+  cursor:pointer;
 }
 
 .card:hover {
-  transform:scale(0.98);
+  transform:translateY(-5px);
 }
 
-.title {
-  font-size:18px;
-  font-weight:600;
-}
-
-.desc {
-  color:#aaa;
-  font-size:14px;
-  margin:5px 0;
-}
+.title { font-size:18px; font-weight:600; }
+.desc { color:#aaa; font-size:14px; margin:10px 0; }
 
 .btn {
   color:#0a84ff;
   font-size:14px;
+}
+
+/* AD */
+.ad-box {
+  margin:25px 0;
+  padding:10px;
+  background:#1c1c1e;
+  border-radius:15px;
+}
+
+/* FOOTER */
+.footer {
+  text-align:center;
+  padding:30px;
+  color:#666;
+  font-size:12px;
 }
 </style>
 
@@ -75,7 +123,7 @@ body {
 <body>
 
 <div class="header">
-  📚 Nova Mangá
+  <h1>📚 Nova Mangá</h1>
   <div class="nav">
     <a href="index.html">Início</a>
     <a href="sobre.html">Sobre</a>
@@ -84,19 +132,54 @@ body {
   </div>
 </div>
 
+<!-- 🔥 TEXTO SEO (MUITO IMPORTANTE) -->
+<div class="seo-box">
+  <h2>Melhores mangás analisados</h2>
+  <p>
+  O Nova Mangá é um site especializado em análises completas de mangás populares como One Piece, Naruto e Death Note.
+  Aqui você encontra reviews detalhadas, opiniões reais e recomendações para descobrir novos mangás.
+  </p>
+</div>
+
 <div class="container" id="list"></div>
+
+<!-- 🔥 1 ANÚNCIO NA HOME (leve e seguro) -->
+<div class="container">
+  <div class="ad-box">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9234613150828597"
+         data-ad-slot="1828596374"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+</div>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<div class="footer">
+  © 2026 Nova Mangá
+</div>
 
 <script src="data.js"></script>
 
 <script>
 const list = document.getElementById("list");
 
-db.forEach(item => {
+function escapeHtml(text){
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+db.forEach(item=>{
   list.innerHTML += `
-    <div class="card">
-      <div class="title">${item.title}</div>
-      <div class="desc">${item.desc.substring(0,100)}...</div>
-      <a class="btn" href="post.html?id=${item.id}">Ler análise →</a>
+    <div class="card" onclick="location.href='post.html?id=${item.id}'">
+      <div class="title">${escapeHtml(item.title)}</div>
+      <div class="desc">${escapeHtml(item.desc.substring(0,120))}...</div>
+      <div class="btn">Ler análise →</div>
     </div>
   `;
 });
