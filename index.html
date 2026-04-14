@@ -2,30 +2,89 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Mangá</title>
 
 <style>
-body { background:#000; color:#fff; font-family:sans-serif; padding:20px; }
-a { color:#0af; }
+body {
+  margin:0;
+  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
+  background:#000;
+  color:#fff;
+}
+
+.header {
+  position:sticky;
+  top:0;
+  backdrop-filter:blur(20px);
+  background:rgba(0,0,0,0.7);
+  padding:15px;
+  text-align:center;
+  font-weight:600;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.nav {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.nav a {
+  color:#0a84ff;
+  text-decoration:none;
+}
+
+.container {
+  padding:20px;
+}
+
+.card {
+  background:#1c1c1e;
+  border-radius:20px;
+  padding:15px;
+  margin-bottom:15px;
+  transition:0.2s;
+}
+
+.card:hover {
+  transform:scale(0.98);
+}
+
+.title {
+  font-size:18px;
+  font-weight:600;
+}
+
+.desc {
+  color:#aaa;
+  font-size:14px;
+  margin:5px 0;
+}
+
+.btn {
+  color:#0a84ff;
+  font-size:14px;
+}
 </style>
 
 </head>
 
 <body>
 
-<h1>📚 Nova Mangá</h1>
+<div class="header">
+  📚 Nova Mangá
+  <div class="nav">
+    <a href="index.html">Início</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="privacidade.html">Privacidade</a>
+    <a href="termos.html">Termos</a>
+  </div>
+</div>
 
-<nav>
-  <a href="index.html">Início</a> |
-  <a href="sobre.html">Sobre</a> |
-  <a href="contato.html">Contato</a> |
-  <a href="privacidade.html">Privacidade</a> |
-  <a href="termos.html">Termos</a>
-</nav>
-
-<hr>
-
-<div id="list"></div>
+<div class="container" id="list"></div>
 
 <script src="data.js"></script>
 
@@ -34,10 +93,10 @@ const list = document.getElementById("list");
 
 db.forEach(item => {
   list.innerHTML += `
-    <div style="margin-bottom:20px;">
-      <h2>${item.title}</h2>
-      <p>${item.desc.substring(0,120)}...</p>
-      <a href="post.html?id=${item.id}">Ler análise completa</a>
+    <div class="card">
+      <div class="title">${item.title}</div>
+      <div class="desc">${item.desc.substring(0,100)}...</div>
+      <a class="btn" href="post.html?id=${item.id}">Ler análise →</a>
     </div>
   `;
 });
