@@ -5,28 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<title>Nova Mangá | Análises de Mangás, Reviews e Recomendações</title>
-
-<meta name="description" content="Análises completas de mangás como One Piece, Naruto e Death Note. Descubra os melhores mangás com reviews detalhadas.">
-<meta name="keywords" content="mangás, análise de mangás, melhores mangás, reviews de mangás">
-<meta name="author" content="Nova Mangá">
-
-<meta name="theme-color" content="#000000">
-
-<!-- Open Graph (Google + redes sociais) -->
-<meta property="og:title" content="Nova Mangá">
-<meta property="og:description" content="Análises completas de mangás">
-<meta property="og:type" content="website">
-
-<!-- 🔥 AdSense (APENAS UMA VEZ NO SITE) -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9234613150828597"
-crossorigin="anonymous"></script>
+<title>Nova Mangá | Análises de Mangás</title>
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
   background:linear-gradient(135deg,#0a0a0a,#1a1a1a);
   color:#fff;
 }
@@ -49,6 +34,7 @@ body {
   color:transparent;
 }
 
+/* NAV */
 .nav {
   margin-top:10px;
   display:flex;
@@ -62,18 +48,37 @@ body {
   font-size:14px;
 }
 
-.nav a:hover { color:#fff; }
+/* BUSCA + FILTRO */
+.search-box {
+  max-width:800px;
+  margin:20px auto;
+  display:flex;
+  gap:10px;
+  padding:0 15px;
+}
+
+.search-box input,
+.search-box select {
+  background:#1c1c1e;
+  border:none;
+  border-radius:12px;
+  padding:12px;
+  color:#fff;
+}
+
+.search-box input {
+  flex:1;
+}
 
 /* SEO TEXT */
 .seo-box {
   max-width:800px;
-  margin:20px auto;
-  padding:20px;
+  margin:10px auto;
+  padding:0 20px;
   color:#aaa;
-  line-height:1.6;
 }
 
-/* GRID */
+/* LISTA */
 .container {
   max-width:800px;
   margin:auto;
@@ -93,20 +98,27 @@ body {
   transform:translateY(-5px);
 }
 
-.title { font-size:18px; font-weight:600; }
-.desc { color:#aaa; font-size:14px; margin:10px 0; }
+.title {
+  font-size:18px;
+  font-weight:600;
+}
 
+.desc {
+  color:#aaa;
+  font-size:14px;
+  margin:10px 0;
+}
+
+/* TAG */
+.tag {
+  font-size:12px;
+  color:#0a84ff;
+}
+
+/* BOTÃO */
 .btn {
   color:#0a84ff;
   font-size:14px;
-}
-
-/* AD */
-.ad-box {
-  margin:25px 0;
-  padding:10px;
-  background:#1c1c1e;
-  border-radius:15px;
 }
 
 /* FOOTER */
@@ -132,32 +144,23 @@ body {
   </div>
 </div>
 
-<!-- 🔥 TEXTO SEO (MUITO IMPORTANTE) -->
+<!-- 🔍 BUSCA + FILTRO -->
+<div class="search-box">
+  <input id="search" placeholder="Buscar mangá ou livro...">
+  
+  <select id="filter">
+    <option value="all">Todos</option>
+    <option value="manga">Mangá</option>
+    <option value="livro">Livro</option>
+  </select>
+</div>
+
+<!-- TEXTO SEO -->
 <div class="seo-box">
-  <h2>Melhores mangás analisados</h2>
-  <p>
-  O Nova Mangá é um site especializado em análises completas de mangás populares como One Piece, Naruto e Death Note.
-  Aqui você encontra reviews detalhadas, opiniões reais e recomendações para descobrir novos mangás.
-  </p>
+  <p>Descubra os melhores mangás e livros com análises completas e recomendações detalhadas.</p>
 </div>
 
 <div class="container" id="list"></div>
-
-<!-- 🔥 1 ANÚNCIO NA HOME (leve e seguro) -->
-<div class="container">
-  <div class="ad-box">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-9234613150828597"
-         data-ad-slot="1828596374"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-  </div>
-</div>
-
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 <div class="footer">
   © 2026 Nova Mangá
@@ -167,6 +170,8 @@ body {
 
 <script>
 const list = document.getElementById("list");
+const searchInput = document.getElementById("search");
+const filterSelect = document.getElementById("filter");
 
 function escapeHtml(text){
   const div = document.createElement("div");
@@ -174,15 +179,53 @@ function escapeHtml(text){
   return div.innerHTML;
 }
 
-db.forEach(item=>{
-  list.innerHTML += `
-    <div class="card" onclick="location.href='post.html?id=${item.id}'">
-      <div class="title">${escapeHtml(item.title)}</div>
-      <div class="desc">${escapeHtml(item.desc.substring(0,120))}...</div>
-      <div class="btn">Ler análise →</div>
-    </div>
-  `;
-});
+function render(items){
+  list.innerHTML = "";
+
+  if(items.length === 0){
+    list.innerHTML = "<p style='color:#888'>Nada encontrado...</p>";
+    return;
+  }
+
+  items.forEach(item=>{
+    list.innerHTML += `
+      <div class="card" onclick="location.href='post.html?id=${item.id}'">
+        <div class="title">${escapeHtml(item.title)}</div>
+        <div class="tag">${item.category || "manga"}</div>
+        <div class="desc">${escapeHtml(item.desc.substring(0,100))}...</div>
+        <div class="btn">Ler análise →</div>
+      </div>
+    `;
+  });
+}
+
+function update(){
+  let filtered = db;
+
+  const search = searchInput.value.toLowerCase();
+  const filter = filterSelect.value;
+
+  if(search){
+    filtered = filtered.filter(i =>
+      i.title.toLowerCase().includes(search)
+    );
+  }
+
+  if(filter !== "all"){
+    filtered = filtered.filter(i =>
+      (i.category || "manga") === filter
+    );
+  }
+
+  render(filtered);
+}
+
+// eventos
+searchInput.addEventListener("input", update);
+filterSelect.addEventListener("change", update);
+
+// inicial
+render(db);
 </script>
 
 </body>
